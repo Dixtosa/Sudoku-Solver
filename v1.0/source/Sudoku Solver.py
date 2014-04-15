@@ -1,5 +1,20 @@
 import wx
 import algorithm
+import random
+
+dist=[
+    [0,0,9]+[0,5,0]+[0,0,0],
+    [3,7,0]+[6,0,4]+[0,9,0],
+    [5,0,4]+[2,0,8]+[0,0,3],
+
+    [6,0,7]+[0,0,0]+[0,0,5],
+    [0,2,0]+[5,0,3]+[0,8,0],
+    [9,0,0]+[0,0,0]+[3,0,4],
+
+    [2,0,0]+[7,0,1]+[6,0,9],
+    [0,9,0]+[4,0,2]+[0,5,1],
+    [0,0,0]+[0,6,0]+[4,0,0]]
+
 
 def lis(s):
 	k=[]
@@ -20,8 +35,10 @@ class SolverFrame(wx.Frame):
 		self.H31=wx.TextCtrl(PaN,-1,pos=(0,100),size=(50,50), style=wx.TE_MULTILINE)
 		self.H32=wx.TextCtrl(PaN,-1,pos=(50,100),size=(50,50), style=wx.TE_MULTILINE)
 		self.H33=wx.TextCtrl(PaN,-1,pos=(100,100),size=(50,50), style=wx.TE_MULTILINE)
-		but=wx.Button(PaN,5,"solve Japanese SUDOKU!",(150,150),wx.Size(200,200))
+		but=wx.Button(PaN,5,"solve Japanese SUDOKU!",(15, 150))
+		but=wx.Button(PaN,6,"generate randomly",(15, 250))
 		self.Bind(wx.EVT_BUTTON, self.solve, id=5)
+		self.Bind(wx.EVT_BUTTON, self.generate, id=6)
 	def g3t(self):
 		h11=self.H11.GetValue()
 		h12=self.H12.GetValue()
@@ -45,6 +62,18 @@ class SolverFrame(wx.Frame):
 		return LIST
 	def solve(self,event):
 		return self.fill(algorithm.solve(self.g3t()))
+	def generate(self, event):
+		self.H11.SetValue(self.generate3x3())
+		self.H12.SetValue(self.generate3x3())
+		self.H13.SetValue(self.generate3x3())
+		self.H21.SetValue(self.generate3x3())
+		self.H22.SetValue(self.generate3x3())
+		self.H23.SetValue(self.generate3x3())
+		self.H31.SetValue(self.generate3x3())
+		self.H32.SetValue(self.generate3x3())
+		self.H33.SetValue(self.generate3x3())
+	def generate3x3(self):
+		return ""
 	def fill(self,s):
 		h1,h2,h3,h4,h5,h6,h7,h8,h9=s
 		H1="".join(h1)
