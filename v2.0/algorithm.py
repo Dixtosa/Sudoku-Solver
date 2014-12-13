@@ -4,6 +4,8 @@
 # Language: Python 2
 # Date started: doh very early 
 
+import itertools
+
 test = [
     [0,0,9,  0,5,0,  0,0,0],
     [3,7,0,  6,0,4,  0,9,0],
@@ -45,15 +47,14 @@ def solve(matrix):
 	working = True
 	while working:
 		working = False
-		for h in range(9):
-			for v in range(9):
-				if matrix[h][v] == 0:
-					restrictions = set (getH(matrix, h) + getV(matrix, v) + getBox(matrix, h, v))
-					All = set(range(1, 10))
-					All -= restrictions
-					if len(All) == 1:
-						matrix[h][v] = list(All)[0]
-						working = True
+		for h, v in list(itertools.product(range(9), range(9))):
+			if matrix[h][v] == 0:
+				restrictions = set (getH(matrix, h) + getV(matrix, v) + getBox(matrix, h, v))
+				All = set(range(1, 10))
+				All -= restrictions
+				if len(All) == 1:
+					matrix[h][v] = list(All)[0]
+					working = True
 	for row in matrix:
 		if row.count(0) > 0:
 			print "This method fails here xD"
